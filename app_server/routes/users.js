@@ -7,15 +7,13 @@ router.post("/signin",(req,res)=>{
   var upwd=req.body.upwd;
   //console.log(uname,upwd);
   pool.query(
-    "select * from tcc_user where uname=? and upwd=?",
+    "select * from cm_user where uname=? and upwd=?",
     [uname,upwd],
     (err,result)=>{
       if(err) console.log(err);
       if(result.length>0){
         res.writeHead(200);
         var user=result[0]
-        req.session.uid=user.uid
-        //console.log(req.session.uid)
         res.write(JSON.stringify({
           ok:1,
           res:user
@@ -23,7 +21,7 @@ router.post("/signin",(req,res)=>{
       }else{
         res.write(JSON.stringify({
           ok:0,
-          msg:"has error about your name or password!"
+          msg:"您的用户名或密码有误！"
         }))
       }
       res.end();
@@ -31,56 +29,6 @@ router.post("/signin",(req,res)=>{
   )
 })
 
-router.get("/islogin",(req,res)=>{
-  res.writeHead(200);
-  if(req.session.uid===undefined){
-    res.write(JSON.stringify({ok:0}))
-    res.end();
-  }else{
-    var uid=req.session.uid;
-    console.log(uid)
-    var sql="select * from tcc_user where uid=?";
-    pool.query(sql,[uid],(err,result)=>{
-      if(err) console.log(err);
-      var user=result[0];
-      res.write(JSON.stringify({ok:1,uname:user.uname}));
-      res.end() 
-    })
-   
-  }
-  
-})
-
-router.get("/signout",(req,res)=>{
-  req.session.uid=undefined;
-  res.end();
-})
-
-router.post("/reg",(req,res)=>{
-  var uname=req.body.uname;
-  var upwd=req.body.upwd;
-  var phone=req.body.phone;
-  //console.log(uname,upwd,phone)
-  var sql="select * from tcc_user where uname=?"
-  pool.query(sql,[uname],(err,result)=>{
-    if(err) throw err;
-    if(result.length==0){
-      pool.query(
-        `insert into tcc_user values(null,?,?,?)`,
-        [uname,upwd,phone],
-        (err,result)=>{
-          if(err) throw err;
-          res.writeHead(200)
-          res.write(JSON.stringify({code:1,msg:"注册成功"}))
-          res.end()
-        })
-    }else{
-      res.writeHead(200)
-      res.write(JSON.stringify({code:0,msg:"用户已存在"}))
-      res.end()
-    }
-  })
-})
 
 //测试：
 //http://localhost:3000/users/islogin ok:0

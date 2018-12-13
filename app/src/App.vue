@@ -14,14 +14,14 @@
           <img src="./assets/search.png" class="nav-img">
           <span class="mui-tab-label">SHOP</span>  
         </router-link>
-        <a class="mui-tab-item" href="#" >
+        <router-link to="/cart" class="mui-tab-item" href="#" >
           <img src="./assets/welove.png" class="nav-img">
           <span class="mui-tab-label">CARTS</span>  
-        </a>
-        <a class="mui-tab-item" href="#" >
+        </router-link>
+        <router-link to="/login" class="mui-tab-item" href="#" >
           <img src="./assets/my.png" class="nav-img">
           <span class="mui-tab-label">MY</span>  
-        </a>
+        </router-link>
     </nav>
   </div> 
 </template>

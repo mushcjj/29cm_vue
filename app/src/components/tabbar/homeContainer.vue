@@ -30,7 +30,7 @@
 
                     <!--卡片商品-->
                     <div class="newsCommond">
-                        <div class="commondCard">
+                        <div class="commondCard" @click="handleJump(item.commond1.cid)">
                             <div class="cardLeft">
                                 <img :src="'http://127.0.0.1:9090/'+item.commond1.bpic">
                                 <ul>
@@ -46,7 +46,7 @@
                                 <p>{{item.commond1.love}}</p>
                             </div>
                         </div>
-                        <div class="commondCard">
+                        <div class="commondCard" @click="handleJump(item.commond2.cid)">
                             <div class="cardLeft">
                                 <img :src="'http://127.0.0.1:9090/'+item.commond2.bpic">
                                 <ul>
@@ -97,7 +97,9 @@
             })
         },
         methods:{
-            
+            handleJump(cid){
+                this.$router.push("/details"+cid)
+            }
         },
         created() {
             

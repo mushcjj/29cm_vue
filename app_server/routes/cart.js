@@ -40,7 +40,7 @@ router.get("/add",(req,res)=>{
 //查找我的购物车
 router.get("/items",(req,res)=>{
     var uid=req.query.uid;
-    var sql=`SELECT iid,uid,pid,count,title,pic,color from tcc_shoppingcart_item left join tcc_products on proid=pid where uid=?`
+    var sql=`SELECT iid,uid,cloid,count,title,price,bpic from cm_shoppingcart_item left join cm_cloth on cloid=cid where uid=?`
     pool.query(sql,[uid],(err,result)=>{
         if(err) console.log(err)
         //console.log(result)
@@ -58,10 +58,10 @@ router.get("/update",(req,res)=>{
     var iid=req.query.iid;
     var count=req.query.count;
     if(count>0){
-        var sql="update tcc_shoppingcart_item set count=? where iid=?";
+        var sql="update cm_shoppingcart_item set count=? where iid=?";
         var data=[count,iid];
     }else{
-        var sql="delete from tcc_shoppingcart_item where iid=?";
+        var sql="delete from cm_shoppingcart_item where iid=?";
         var data=[iid];
     }
     pool.query(sql,data,(err,result)=>{
